@@ -1,2 +1,5 @@
-# my_blog
-graphql + apollo + react
+### 개인 블로그 클라이언트
+
+개인 블로그 작업용 클라이언트 입니다.
+
+react + apollo
