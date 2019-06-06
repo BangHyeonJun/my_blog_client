@@ -1,7 +1,6 @@
 import React from "react";
 
 function Card({ img, title, publish_date, category, commentCount }) {
-    console.log("http://localhost:4000" + img.path);
     return (
         <div>
             <div>
