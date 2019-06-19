@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
+import "./index.scss";
 
 // 사용자 컴포넌트
 import Card from "./Card";
@@ -31,16 +32,18 @@ const PostList = () => (
             if (error) return `Error! ${error.message}`;
             console.log(data);
             return (
-                <div>
-                    {data.post.map(post => (
-                        <Card
-                            img={post.mainImg}
-                            title={post.title}
-                            category={post.category}
-                            publish_date={post.publish_date}
-                            commentCount={post.comments.lenght}
-                        />
-                    ))}
+                <div className="postlist-container">
+                    <div className="postlist-box">
+                        {data.post.map(post => (
+                            <Card
+                                img={post.mainImg}
+                                title={post.title}
+                                category={post.category}
+                                publish_date={post.publish_date}
+                                commentCount={post.comments.lenght}
+                            />
+                        ))}
+                    </div>
                 </div>
             );
         }}
