@@ -1,10 +1,19 @@
 import React from "react";
+import noImg from "../../statics/no_image.png";
+
+function onError() {
+    console.log("들어옴");
+}
 
 function Card({ img, title, publish_date, category, commentCount }) {
     return (
         <div>
             <div>
-                <img src={`http://localhost:4000${img.path}`} />
+                {img.path ? (
+                    <img src={`http://localhost:4000${img.path}`} />
+                ) : (
+                    <img src={noImg} />
+                )}
                 <div>test</div>
             </div>
             <div>{title}</div>
