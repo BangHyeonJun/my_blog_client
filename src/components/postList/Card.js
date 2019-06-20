@@ -1,9 +1,7 @@
 import React from "react";
 import noImg from "../../statics/no_image.png";
+import "./Card.scss"
 
-function onError() {
-    console.log("들어옴");
-}
 
 function Card({ img, title, publish_date, category, commentCount }) {
     return (
