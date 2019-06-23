@@ -1,7 +1,6 @@
 import React from "react";
-import noImg from "../../statics/no_image.png";
-import "./Card.scss"
-
+import noImg from "../../statics/images/no_image.png";
+import "./Card.scss";
 
 function Card({ img, title, publish_date, category, commentCount }) {
     return (
