@@ -1,140 +1,109 @@
-import React, { Component } from "react";
+import React, { Component, Fragment, useState } from "react";
 
-// quill
-import ReactQuill, { Quill, Mixin, Toolbar } from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// Apollo
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
 
-// fonts
-import NotoSans from "../../statics/fonts/NotoSansKR-Regular.otf";
-import NanumGothic from "../../statics/fonts/NanumGothic-Regular.ttf";
+// 컴포넌트
+import Contents from "./Contents";
+import Title from "./Title";
 
-// Quill 참고
-//https://www.npmjs.com/package/react-quill#theme
-
-class index extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { editorHtml: "", mountedEditor: false };
-        this.quillRef = null;
-        this.reactQuillRef = null;
-        this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.attachQuillRefs = this.attachQuillRefs.bind(this);
+const INSERT_POST = gql`
+    mutation InsertPost(
+        $category: String!
+        $title: String!
+        $content: String!
+    ) {
+        insertPost(category: $category, title: $title, content: $content)
     }
+`;
 
-    componentDidMount() {
-        this.attachQuillRefs();
-    }
+const Index = () => {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [html, setHtml] = useState("");
+    const [text, setText] = useState("");
 
-    componentDidUpdate() {
-        this.attachQuillRefs();
-    }
+    // 상태 변화를 감지하면 적용시켜줍니다.
+    const handleChange = (name, value) => {
+        if (name === "title") {
+            setTitle(value);
+        } else if (name === "content") {
+            setContent(value);
+        } else if (name === "html") {
+            setHtml(value);
+        } else if (name === "text") {
+            setText(value);
+        } else {
+            alert("알수없는 타입이 들어왔습니다.");
+        }
+    };
 
-    attachQuillRefs() {
-        // Ensure React-Quill reference is available:
-        if (typeof this.reactQuillRef.getEditor !== "function") return;
-        // Skip if Quill reference is defined:
-        if (this.quillRef != null) return;
-
-        const quillRef = this.reactQuillRef.getEditor();
-        if (quillRef != null) this.quillRef = quillRef;
-    }
-
-    handleClick() {
-        var range = this.quillRef.getSelection();
-        let position = range ? range.index : 0;
-        this.quillRef.insertText(position, "Hello, World! ");
-        console.log(this.quillRef.getContents());
-    }
-
-    handleChange(html) {
-        console.log(html);
-        this.setState({ editorHtml: html });
-    }
-
-    render() {
-        return (
-            <div>
-                <ReactQuill
-                    ref={el => {
-                        this.reactQuillRef = el;
-                    }}
-                    theme={"snow"}
-                    onChange={this.handleChange}
-                    modules={Editor.modules}
-                    formats={Editor.formats}
-                    defaultValue={this.state.editorHtml}
-                    placeholder={this.props.placeholder}
-                />
-                <button onClick={this.handleClick}>Insert Text</button>
-            </div>
-        );
-    }
-}
-
-let Editor = {
-    modules: {
-        toolbar: [
-            ["bold", "italic", "underline", "strike"], // toggled buttons
-            ["blockquote", "code-block"], // blocks
-            [{ header: 1 }, { header: 2 }], // custom button values
-            [{ list: "ordered" }, { list: "bullet" }], // lists
-            [{ script: "sub" }, { script: "super" }], // superscript/subscript
-            [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-            [{ direction: "rtl" }], // text direction
-            [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], // header dropdown
-            [{ color: [] }, { background: [] }], // dropdown with defaults
-            [{ font: [] }], // font family
-            [{ align: [] }], // text align
-            ["clean"] // remove formatting
-        ]
-    },
-
-    formats: [
-        "header",
-        "font",
-        "background",
-        "color",
-        "code",
-        "size",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "blockquote",
-        "list",
-        "bullet",
-        "indent",
-        "script",
-        "align",
-        "direction",
-        "link",
-        "image",
-        "code-block",
-        "formula",
-        "video"
-    ]
+    return (
+        <Mutation mutation={INSERT_POST}>
+            {(insertPost, { loading, error, data }) => (
+                <Fragment>
+                    <form
+                        onSubmit={e => {
+                            e.preventDefault();
+                            // console.log(userTitle);
+                            // console.log(userCotents);
+                            // insertPost({
+                            //     variables: {
+                            //         category: "test",
+                            //         title: userTitle,
+                            //         content: userCotents
+                            //     }
+                            // });
+                            setTitle("");
+                            setContent("");
+                            setHtml("");
+                            setText("");
+                        }}
+                    >
+                        <Title userTitle={title} onChange={handleChange} />
+                        <Contents
+                            userCotent={content}
+                            onChange={handleChange}
+                        />
+                        <button type="submit">저장</button>
+                    </form>
+                </Fragment>
+            )}
+        </Mutation>
+    );
 };
 
-export default index;
+{
+    /* <form
+    onSubmit={e => {
+        e.preventDefault();
+        insertTest({ variables: { text: input.value } });
+        input.value = "";
+    }}
+>
+    <input
+        ref={node => {
+            input = node;
+        }}
+    />
+    <button type="submit">Add Todo</button>
+</form>
+{loading && <p>Loading...</p>}
+{error && <p>Error :( Please try again</p>}  */
+}
 
-// modules = {
-//     toolbar: [
-//         [{ font: [] }],
-//         [{ header: [1, 2, false] }],
+// class index extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = { userTitle: "타이틀 합니다.", userCotents: "" };
+//     }
 
-//         ["bold", "italic", "underline", "strike", "code-block"],
-//         [{ color: [] }], // dropdown with defaults from theme
-//         [
-//             { list: "ordered" },
-//             { list: "bullet" },
-//             { indent: "-1" },
-//             { indent: "+1" }
-//         ],
-//         [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-//         ["link", "image", "video"],
-//         [{ align: [] }],
-//         [{ size: ["small", false, "large", "huge"] }]
-//     ]
-// };
+//     render() {
+//         const { userTitle, userCotents } = this.state;
+
+//         return <Fragment />;
+//     }
+// }
+
+export default Index;
