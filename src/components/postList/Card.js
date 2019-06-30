@@ -1,10 +1,11 @@
 import React from "react";
 import noImg from "../../statics/images/no_image.png";
+import {Link } from "react-router-dom"
 import "./Card.scss";
 
-function Card({ img, title, publish_date, category, commentCount }) {
+function Card({ id, img, title, publish_date, category, commentCount }) {
     return (
-        <div>
+        <Link to={`details/${id}`}>
             <div>
                 {img.path ? (
                     <img src={`http://localhost:4000${img.path}`} />
@@ -19,7 +20,7 @@ function Card({ img, title, publish_date, category, commentCount }) {
                 <div>{category}</div>
                 <div>{commentCount}</div>
             </div>
-        </div>
+        </Link>
     );
 }
 

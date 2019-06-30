@@ -9,6 +9,7 @@ import Card from "./Card";
 const GET_POST = gql`
     query {
         post {
+            _id
             title
             category
             mainImg {
@@ -36,6 +37,7 @@ const PostList = () => (
                     <div className="postlist-box">
                         {data.post.map(post => (
                             <Card
+                                id={post._id}
                                 img={post.mainImg}
                                 title={post.title}
                                 category={post.category}

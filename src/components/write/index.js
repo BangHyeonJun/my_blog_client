@@ -10,11 +10,10 @@ import Title from "./Title";
 
 const INSERT_POST = gql`
     mutation InsertPost(
-        $category: String!
         $title: String!
         $content: String!
     ) {
-        insertPost(category: $category, title: $title, content: $content)
+        insertPost(title: $title, content: $content)
     }
 `;
 
@@ -46,15 +45,14 @@ const Index = () => {
                     <form
                         onSubmit={e => {
                             e.preventDefault();
-                            // console.log(userTitle);
-                            // console.log(userCotents);
-                            // insertPost({
-                            //     variables: {
-                            //         category: "test",
-                            //         title: userTitle,
-                            //         content: userCotents
-                            //     }
-                            // });
+                            console.log(title);
+                            console.log(content);
+                            insertPost({
+                                variables: {
+                                    title: title,
+                                    content: html
+                                }
+                            });
                             setTitle("");
                             setContent("");
                             setHtml("");
