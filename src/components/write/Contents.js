@@ -5,8 +5,6 @@ import ReactQuill, { Quill, Mixin, Toolbar } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 // fonts
-import NotoSans from "../../statics/fonts/NotoSansKR-Regular.otf";
-import NanumGothic from "../../statics/fonts/NanumGothic-Regular.ttf";
 
 // Quill 참고
 //https://www.npmjs.com/package/react-quill#theme

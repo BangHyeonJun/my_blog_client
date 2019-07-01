@@ -1,3 +1,5 @@
+@import "../common/sass/mobile.scss";
+
 .postlist-container {
     width: 100%;
     display: flex;
@@ -5,8 +7,19 @@
     align-items: center;
 
     .postlist-box {
-        width: 60%;
+        width: 55%;
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
+
+        @media screen and (max-width: $tablet-max-width) {
+            width: 80%;
+            justify-content: center;
+        }
+
+        @media screen and (max-width: $mobile-max-width) {
+            width: 100%;
+            justify-content: center;
+        }
     }
 }

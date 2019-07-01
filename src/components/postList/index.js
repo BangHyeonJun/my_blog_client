@@ -37,6 +37,7 @@ const PostList = () => (
                     <div className="postlist-box">
                         {data.post.map(post => (
                             <Card
+                                key={post._id}
                                 id={post._id}
                                 img={post.mainImg}
                                 title={post.title}

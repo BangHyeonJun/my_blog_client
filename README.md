@@ -1,5 +1,14 @@
-### 개인 블로그 클라이언트
+### 개인 블로그 서버
 
-#개인 블로그 작업용 클라이언트 입니다.
+#개인 블로그 작업용 서버 입니다.
 
-react + apollo
+graphql
+apollo
+react
+
+# router
+
+-   http://localhost:3000/ - 메인
+-   http://localhost:3000/post/{id} - post
+-   http://localhost:3000/write - 글쓰기
+-   http://localhost:3000/

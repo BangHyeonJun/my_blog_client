@@ -14,7 +14,7 @@ export default class index extends Component {
                 <div className="ph3 pv1 background-gray">
                     <Switch>
                         <Route exact path="/" component={PostList} />
-                        <Route path="/post" component={Post} />
+                        <Route path="/post/:id" component={Post} />
                         <Route path="/write" component={Write} />
                         <Route path="/test" component={Test} />
                     </Switch>

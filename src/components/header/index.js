@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { withRouter } from "react-router";
 
 class index extends Component {
     render() {
@@ -28,4 +27,4 @@ class index extends Component {
     }
 }
 
-export default withRouter(index);
+export default index;
