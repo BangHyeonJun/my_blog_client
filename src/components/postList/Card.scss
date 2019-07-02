@@ -1,30 +1,93 @@
 @import "../common/sass/mobile.scss";
-@import "../common/sass/fonts.scss";
 
 // .a-Lnik {
 //     color: white;
 // }
 
 .card-container {
+    perspective: 1000px;
+}
+.card {
+    position: relative;
+    text-align: center;
+    padding: 14px;
+    // border: 1px solid rgba($color: #000000, $alpha: 0.3);
+    box-shadow: 0px 0px 1px 1px rgba($color: #bdc3c7, $alpha: 0.1);
+    // border-radius: 6px;
+    margin-bottom: 30px;
     width: 300px;
-    padding: 10px;
-    border: 1px solid rgba($color: #000000, $alpha: 0.3);
-    border-radius: 4px;
-    box-shadow: 1px 1px 5px 1px rgba($color: #000000, $alpha: 0.1);
-    margin-bottom: 20px;
+    height: 410px;
+    transition: all 0.6s ease;
+    transform-style: preserve-3d;
+
+    color: #000000;
+    background-color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     @media screen and (max-width: $mobile-max-width) {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
+}
 
-    .img-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
+.front,
+.back {
+    position: absolute;
+    // top: 0px;
+    // left: 0px;
+    // width: 100%;
+    // height: 100%;
+    text-align: center;
+    backface-visibility: hidden;
+    cursor: pointer;
+}
 
-        img {
-            width: 280px;
-            height: 280px;
-        }
+.back {
+    transform: rotateY(180deg);
+}
+.card:hover {
+    transform: rotateY(180deg);
+}
+
+/* 이미지 컨테이너 */
+.img-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+/* 발행일 컨테이너 */
+.publish-date-container {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* 타이틀 컨테이너 */
+.title-container {
+    width: 100%;
+    height: 54px;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* 자세히 보기 컨테이너*/
+.detail-info-container {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    h5 {
+        margin-right: 6px;
     }
 }

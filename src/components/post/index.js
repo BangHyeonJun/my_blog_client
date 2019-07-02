@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
+// 사용자 컴포넌트
+import Writer from "./Writer";
+import Contents from "./Contents";
+import Right from "./Right";
+
 const GET_POST = gql`
     query GETPOST($id: String!) {
         getPost(id: $id) {
@@ -29,6 +34,9 @@ const Post = ({
 
                 return (
                     <div>
+                        <Writer />
+                        <Contents />
+                        <Right />
                         <div>{title}</div>
                         <div>{content}</div>
                         <div>댓글</div>
