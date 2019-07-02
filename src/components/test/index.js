@@ -4,13 +4,21 @@ import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 
 const ADD_TEST = gql`
-    mutation InsertTest($text: String) {
-        insertTest(text: $text)
+    mutation uploadFile($file: Upload!) {
+        uploadFile(file: $file)
     }
 `;
 
+/*
+    https://velog.io/@jerrynim_/Graphql-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C-tsjxekc19r
+    https://github.com/benawad/graphql-yoga-upload-example/blob/master/index.js
+*/
 const AddTest = () => {
     let input;
+
+    const onChange = () => {
+        const singleUploadMutation = useCallback(useMutation, []);
+    };
 
     return (
         <Mutation mutation={ADD_TEST}>
