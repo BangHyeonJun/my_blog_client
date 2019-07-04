@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { useQuery } from "react-apollo-hooks";
 
 // 사용자 CSS
 import "./index.scss";
@@ -28,33 +28,32 @@ const Post = ({
         params: { id }
     }
 }) => {
+    const { data, error, loading } = useQuery(GET_POST);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error! {error.message}</div>;
+    }
+
     return (
-        <Query query={GET_POST} variables={{ id }}>
-            {({ loading, error, data }) => {
-                if (loading) return null;
-                if (error) return `Error! ${error}`;
-
-                let { comments, content, title } = data.getPost;
-
-                return (
-                    <div className="post-container">
-                        <div className="post-box">
-                            <div className="post-title-container">
-                                <Title />
-                            </div>
-                            <div className="post-main-container">
-                                <Writer />
-                                <Contents />
-                                <Another />
-                            </div>
-                            {/* <div>{title}</div>
-                            <div>{content}</div>
-                            <div>댓글</div> */}
-                        </div>
-                    </div>
-                );
-            }}
-        </Query>
+        <div className="post-container">
+            <div className="post-box">
+                <div className="post-title-container">
+                    <Title />
+                </div>
+                <div className="post-main-container">
+                    <Writer />
+                    <Contents />
+                    <Another />
+                </div>
+                {/* <div>{title}</div>
+            <div>{content}</div>
+            <div>댓글</div> */}
+            </div>
+        </div>
     );
 };
 

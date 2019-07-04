@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { useQuery } from "react-apollo-hooks";
 import "./index.scss";
 
 // 사용자 컴포넌트
@@ -14,8 +14,6 @@ const GET_POST = gql`
             category
             mainImg {
                 path
-                width
-                height
             }
             publish_date
             content
@@ -26,31 +24,34 @@ const GET_POST = gql`
     }
 `;
 
-const PostList = () => (
-    <Query query={GET_POST}>
-        {({ loading, error, data }) => {
-            if (loading) return "Loading...";
-            if (error) return `Error! ${error.message}`;
-            console.log(data);
-            return (
-                <div className="postlist-container">
-                    <div className="postlist-box">
-                        {data.post.map(post => (
-                            <Card
-                                key={post._id}
-                                id={post._id}
-                                img={post.mainImg}
-                                title={post.title}
-                                category={post.category}
-                                publish_date={post.publish_date}
-                                commentCount={post.comments.lenght}
-                            />
-                        ))}
-                    </div>
-                </div>
-            );
-        }}
-    </Query>
-);
+const PostList = () => {
+    const { data, error, loading } = useQuery(GET_POST);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error! {error.message}</div>;
+    }
+
+    return (
+        <div className="postlist-container">
+            <div className="postlist-box">
+                {data.post.map(post => (
+                    <Card
+                        key={post._id}
+                        id={post._id}
+                        img={post.mainImg}
+                        title={post.title}
+                        category={post.category}
+                        publish_date={post.publish_date}
+                        commentCount={post.comments.lenght}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default PostList;

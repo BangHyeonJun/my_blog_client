@@ -1,27 +1,33 @@
 import React, { Component, Fragment, useState } from "react";
+import { useMutation } from "react-apollo-hooks";
 
 // Apollo
 import gql from "graphql-tag";
-import { Mutation } from "react-apollo";
 
 // 컴포넌트
 import Contents from "./Contents";
 import Title from "./Title";
 
 const INSERT_POST = gql`
-    mutation InsertPost(
-        $title: String!
-        $content: String!
-    ) {
+    mutation InsertPost($title: String!, $content: String!) {
         insertPost(title: $title, content: $content)
     }
 `;
 
 const Index = () => {
+    const { data, error, loading } = useMutation(INSERT_POST);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [html, setHtml] = useState("");
     const [text, setText] = useState("");
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error! {error.message}</div>;
+    }
 
     // 상태 변화를 감지하면 적용시켜줍니다.
     const handleChange = (name, value) => {
@@ -39,36 +45,23 @@ const Index = () => {
     };
 
     return (
-        <Mutation mutation={INSERT_POST}>
-            {(insertPost, { loading, error, data }) => (
-                <Fragment>
-                    <form
-                        onSubmit={e => {
-                            e.preventDefault();
-                            console.log(title);
-                            console.log(content);
-                            insertPost({
-                                variables: {
-                                    title: title,
-                                    content: html
-                                }
-                            });
-                            setTitle("");
-                            setContent("");
-                            setHtml("");
-                            setText("");
-                        }}
-                    >
-                        <Title userTitle={title} onChange={handleChange} />
-                        <Contents
-                            userCotent={content}
-                            onChange={handleChange}
-                        />
-                        <button type="submit">저장</button>
-                    </form>
-                </Fragment>
-            )}
-        </Mutation>
+        <Fragment>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    console.log(title);
+                    console.log(content);
+                    setTitle("");
+                    setContent("");
+                    setHtml("");
+                    setText("");
+                }}
+            >
+                <Title userTitle={title} onChange={handleChange} />
+                <Contents userCotent={content} onChange={handleChange} />
+                <button type="submit">저장</button>
+            </form>
+        </Fragment>
     );
 };
 
