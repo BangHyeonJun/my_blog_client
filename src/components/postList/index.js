@@ -1,10 +1,12 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
-import "./index.scss";
+import classNames from "classnames/bind";
+import styles from "./index.module.scss";
 
 // 사용자 컴포넌트
 import Card from "./Card";
+const cx = classNames.bind(styles);
 
 const GET_POST = gql`
     query {
@@ -36,8 +38,8 @@ const PostList = () => {
     }
 
     return (
-        <div className="postlist-container">
-            <div className="postlist-box">
+        <div className={cx("postlist-container")}>
+            <div className={cx("postlist-box")}>
                 {data.post.map(post => (
                     <Card
                         key={post._id}

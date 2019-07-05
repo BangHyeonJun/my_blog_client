@@ -12,7 +12,7 @@ import Another from "./Another";
 import Title from "./Title";
 
 const GET_POST = gql`
-    query GETPOST($id: String!) {
+    query($id: String!) {
         getPost(id: $id) {
             title
             content
@@ -28,7 +28,12 @@ const Post = ({
         params: { id }
     }
 }) => {
-    const { data, error, loading } = useQuery(GET_POST);
+    console.log(id);
+    const { data, error, loading } = useQuery(GET_POST, {
+        variables: { id: id }
+    });
+
+    console.log(data);
 
     if (loading) {
         return <div>Loading...</div>;

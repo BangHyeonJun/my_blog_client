@@ -18,6 +18,10 @@ class index extends Component {
                         글쓰기
                     </Link>
                     |
+                    <Link to="/login" className="ml1 no-underline black">
+                        로그인
+                    </Link>
+                    |
                     <Link to="/test" className="ml1 no-underline black">
                         테스트
                     </Link>

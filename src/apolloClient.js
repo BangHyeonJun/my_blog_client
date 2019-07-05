@@ -1,5 +1,6 @@
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { setContext } from "apollo-link-context";
 import { HttpLink } from "apollo-link-http"; // TODO : 안쓰면 지울것
 import { onError } from "apollo-link-error"; // TODO : 안쓰면 지울것
 import { ApolloLink } from "apollo-link"; // TODO : 안쓰면 지울것
@@ -27,10 +28,27 @@ import { createUploadLink } from "apollo-upload-client";
 //     cache: new InMemoryCache()
 // });
 
+const httpLink = createUploadLink({
+    uri: "http://localhost:4000/",
+    credentials: "same-origin"
+});
+
+const authLink = setContext((_, { headers }) => {
+    // 만약 인증 토큰이 로컬 스토리지에 존재한다면 token을 가져옵니다.
+    const token = localStorage.getItem("token");
+    // httpLink가 헤더를 읽을 수 있도록 헤더를 컨텍스트로 리턴하십시오.
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : ""
+        }
+    };
+});
+
 // 아오 시바 이거떄문에 이틀을 고생했네.... react-boost가 upload를 지원안하네...
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: createUploadLink({ uri: "http://localhost:4000/" })
+    link: authLink.concat(httpLink)
 });
 
 export default client;
