@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
 
-// 해당 포스트를 가져옵니다.
 const CHECK_LOGIN = gql`
-    query($id: String!, $password: String!) {
-        checkMember(email: $id, password: $password) {
-            title
-            content
+    mutation($email: String!, $password: String!) {
+        checkMember(email: $email, password: $password) {
+            userid
         }
     }
 `;
 
 const Index = () => {
-    const [id, setID] = useState("");
-    const [password, setPASSWORD] = useState("");
+    let email = "";
+    let password = "";
 
+    const CHECKLOGINQUERY = useMutation(CHECK_LOGIN);
     const handleChange = e => {
         switch (e.target.name) {
             case "id":
-                setID(e.target.value);
+                email = e.target.value;
                 break;
             case "password":
-                setPASSWORD(e.target.value);
+                password = e.target.value;
                 break;
             default:
                 alert("알수없는 타입이 변경되었습니다.");
@@ -30,23 +29,20 @@ const Index = () => {
         }
     };
 
-    const handleButton = async event => {
-        const { data, error, loading } = useQuery(CHECK_LOGIN, {
-            variables: { email: id, password }
+    const handleClick = async e => {
+        const {
+            data: { checkMember: result }
+        } = await CHECKLOGINQUERY({
+            variables: { email, password }
         });
 
-        if (loading) {
-            alert("loading");
-            return <div>Loading...</div>;
+        if (result === null) {
+            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+        } else {
+            alert("로그인 되었습니다.");
         }
 
-        if (error) {
-            alert("error");
-            return <div>Error! {error.message}</div>;
-        }
-        alert("data");
-
-        console.log(data);
+        console.log(result);
     };
 
     return (
@@ -63,7 +59,7 @@ const Index = () => {
                 onChange={handleChange}
                 placeholder="비밀번호"
             />
-            <input type="button" value="로그인" onClick={handleButton} />
+            <button onClick={handleClick}>tset</button>
         </div>
     );
 };
