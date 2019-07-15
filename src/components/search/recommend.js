@@ -5,8 +5,8 @@ import classNames from "classnames/bind";
 import styles from "./recommend.module.scss";
 const cx = classNames.bind(styles);
 
-const recommend = () => {
-    return <div className={cx("recommendContainer")}>테스트</div>;
+const recommend = title => {
+    return <div className={cx("recommendContainer")} />;
 };
 
 export default recommend;

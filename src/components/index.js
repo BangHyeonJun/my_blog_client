@@ -6,7 +6,6 @@ import Post from "./post";
 import Write from "./write";
 import Login from "./login";
 import Test from "./test"; // TODO : 이 부분은 테스트 부분이므로 배포시 삭제해야합니다.
-import Search from "./search";
 
 export default class index extends Component {
     render() {
@@ -14,7 +13,6 @@ export default class index extends Component {
             <div className="center w85">
                 {/* <TestHeader /> */}
                 {/* 이 부분은 테스트를 위한 부분 입니다.*/}
-                <Search />
                 <div className="ph3 pv1 background-gray">
                     <Switch>
                         <Route exact path="/" component={PostList} />

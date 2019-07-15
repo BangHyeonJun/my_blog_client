@@ -1,7 +1,19 @@
+@import "../common/sass/mobile.scss";
+
 .searchContainer {
     width: 45%;
     height: 50px;
     position: relative;
+
+    @media screen and (max-width: $tablet-max-width) {
+        width: 80%;
+        justify-content: space-between;
+    }
+
+    @media screen and (max-width: $mobile-max-width) {
+        width: 100%;
+        justify-content: center;
+    }
 
     .searchHeader {
         position: absolute;
