@@ -39,7 +39,7 @@ const PostList = () => {
     }
 
     return (
-        <div className={cx("search-container")}>
+        <div className={cx("container")}>
             <div className={cx("search-container")}>
                 <Search />
             </div>
