@@ -3,10 +3,8 @@ import gql from "graphql-tag";
 import { useQuery, useMutation } from "react-apollo-hooks";
 
 const CHECK_LOGIN = gql`
-    mutation($email: String!, $password: String!) {
-        checkMember(email: $email, password: $password) {
-            userid
-        }
+    mutation LOGIN($email: String!, $password: String!) {
+        login(email: $email, password: $password)
     }
 `;
 
@@ -17,7 +15,7 @@ const Index = () => {
     const CHECKLOGINQUERY = useMutation(CHECK_LOGIN);
     const handleChange = e => {
         switch (e.target.name) {
-            case "id":
+            case "email":
                 email = e.target.value;
                 break;
             case "password":
@@ -30,26 +28,21 @@ const Index = () => {
     };
 
     const handleClick = async e => {
-        const {
-            data: { checkMember: result }
-        } = await CHECKLOGINQUERY({
+        const { data } = await CHECKLOGINQUERY({
             variables: { email, password }
         });
 
-        if (result === null) {
-            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
-        } else {
-            alert("로그인 되었습니다.");
-        }
-
-        console.log(result);
+        // TODO : 오류처리 해줘야 함
+        const token = data.login;
+        localStorage.setItem(process.env.REACT_APP_TOKEN_PREFIX, token);
+        alert("로그인 되었습니다.");
     };
 
     return (
         <div>
             <input
                 type="text"
-                name="id"
+                name="email"
                 onChange={handleChange}
                 placeholder="아이디"
             />
