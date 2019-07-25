@@ -34,6 +34,7 @@ const Index = () => {
 
         // TODO : 오류처리 해줘야 함
         const token = data.login;
+        console.log();
         localStorage.setItem(process.env.REACT_APP_TOKEN_PREFIX, token);
         alert("로그인 되었습니다.");
     };

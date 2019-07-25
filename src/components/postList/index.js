@@ -9,15 +9,13 @@ import Search from "../search";
 import Card from "./Card";
 const cx = classNames.bind(styles);
 
-const GET_POST = gql`
+const GET_POSTS = gql`
     query {
-        post {
+        getPosts {
             _id
             title
             category
-            mainImg {
-                path
-            }
+            mainImg
             publish_date
             content
             comments {
@@ -28,7 +26,7 @@ const GET_POST = gql`
 `;
 
 const PostList = () => {
-    const { data, error, loading } = useQuery(GET_POST);
+    const { data, error, loading } = useQuery(GET_POSTS);
 
     if (loading) {
         return <div>Loading...</div>;

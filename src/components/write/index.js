@@ -23,7 +23,13 @@ const INSERT_POST = gql`
     }
 `;
 
-const Index = ({ postID }) => {
+const Index = ({
+    match: {
+        params: { id }
+    }
+}) => {
+    const postID = id;
+
     const { data, error, loading } = useQuery(GET_LOGIN_MEMBER);
 
     if (loading) {
@@ -40,7 +46,7 @@ const Index = ({ postID }) => {
                 <UpdatePost postID={postID} userID={data.getLoginMember._id} />
             );
         } else {
-            return <WritePost serID={data.getLoginMember._id} />;
+            return <WritePost userID={data.getLoginMember._id} />;
         }
     } else {
         alert("회원만 이용 가능항 서비스 입니다.");

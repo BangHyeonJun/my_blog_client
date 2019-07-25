@@ -27,8 +27,8 @@ const Card = ({ id, img, title, publish_date, category, commentCount }) => {
                 <div className={cx("post-list-card")}>
                     <div className={cx("post-list-front")}>
                         <div className={cx("post-list-img-container")}>
-                            {img.path ? (
-                                <img src={`http://localhost:4000${img.path}`} />
+                            {img ? (
+                                <img src={`http://localhost:4000${img}`} />
                             ) : (
                                 <img src={noImg} />
                             )}

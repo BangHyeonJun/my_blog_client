@@ -34,10 +34,11 @@ const httpLink = createUploadLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-    // 만약 인증 토큰이 로컬 스토리지에 존재한다면 token을 가져옵니다.
-    const token = localStorage.getItem("X-JWT");
-    // httpLink가 헤더를 읽을 수 있도록 헤더를 컨텍스트로 리턴하십시오.
+    const key = process.env.REACT_APP_TOKEN_PREFIX;
 
+    // 만약 인증 토큰이 로컬 스토리지에 존재한다면 token을 가져옵니다.
+    const token = localStorage.getItem(key);
+    // httpLink가 헤더를 읽을 수 있도록 헤더를 컨텍스트로 리턴하십시오.
     return {
         headers: {
             ...headers,

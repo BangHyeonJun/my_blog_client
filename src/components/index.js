@@ -36,7 +36,8 @@ export default class index extends Component {
                         {/* 포스트 관련 */}
                         <Route exact path="/" component={PostList} />
                         <Route path="/post/:id" component={Post} />
-                        <Route path="/write" component={Write} />
+                        <Route exact path="/write" component={Write} />
+                        <Route path="/write/:id" component={Write} />
 
                         {/* 유저 관련 */}
                         <Route path="/member/login" component={Login} />
