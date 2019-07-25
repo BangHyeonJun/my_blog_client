@@ -9,7 +9,7 @@ import "react-quill/dist/quill.snow.css";
 // Quill 참고
 //https://www.npmjs.com/package/react-quill#theme
 
-const Content = ({ userCotent, userHtml, onChange }) => {
+const Content = ({ userCotent, userHtml, userMainImg, onChange }) => {
     let placeholder = "내용을 입력해주세요";
     let reactQuillRef = null;
     let quillRef = null;
