@@ -38,8 +38,6 @@ const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem("X-JWT");
     // httpLink가 헤더를 읽을 수 있도록 헤더를 컨텍스트로 리턴하십시오.
 
-    console.log(token);
-
     return {
         headers: {
             ...headers,

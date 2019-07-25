@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 
@@ -28,12 +28,9 @@ const Post = ({
         params: { id }
     }
 }) => {
-    console.log(id);
     const { data, error, loading } = useQuery(GET_POST, {
         variables: { id: id }
     });
-
-    console.log(data);
 
     if (loading) {
         return <div>Loading...</div>;

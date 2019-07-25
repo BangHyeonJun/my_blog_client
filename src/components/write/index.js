@@ -1,12 +1,21 @@
 import React, { Component, Fragment, useState } from "react";
-import { useMutation } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
 
 // Apollo
 import gql from "graphql-tag";
 
-// 컴포넌트
-import Contents from "./Contents";
-import Title from "./Title";
+// 사용자 컴포넌트
+import UpdatePost from "./UpdatePost";
+import WritePost from "./WritePost";
+
+// 정상적인 로그인 사용자 인지 확인하는 부분
+const GET_LOGIN_MEMBER = gql`
+    {
+        getLoginMember {
+            _id
+        }
+    }
+`;
 
 const INSERT_POST = gql`
     mutation InsertPost($title: String!, $content: String!) {
@@ -14,12 +23,8 @@ const INSERT_POST = gql`
     }
 `;
 
-const Index = () => {
-    const { data, error, loading } = useMutation(INSERT_POST);
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [html, setHtml] = useState("");
-    const [text, setText] = useState("");
+const Index = ({ postID }) => {
+    const { data, error, loading } = useQuery(GET_LOGIN_MEMBER);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -29,40 +34,68 @@ const Index = () => {
         return <div>Error! {error.message}</div>;
     }
 
-    // 상태 변화를 감지하면 적용시켜줍니다.
-    const handleChange = (name, value) => {
-        if (name === "title") {
-            setTitle(value);
-        } else if (name === "content") {
-            setContent(value);
-        } else if (name === "html") {
-            setHtml(value);
-        } else if (name === "text") {
-            setText(value);
+    if (data) {
+        if (postID) {
+            return (
+                <UpdatePost postID={postID} userID={data.getLoginMember._id} />
+            );
         } else {
-            alert("알수없는 타입이 들어왔습니다.");
+            return <WritePost serID={data.getLoginMember._id} />;
         }
-    };
+    } else {
+        alert("회원만 이용 가능항 서비스 입니다.");
+        // TODO : 오류 처리해야함
+        return <div />;
+    }
 
-    return (
-        <Fragment>
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    console.log(title);
-                    console.log(content);
-                    setTitle("");
-                    setContent("");
-                    setHtml("");
-                    setText("");
-                }}
-            >
-                <Title userTitle={title} onChange={handleChange} />
-                <Contents userCotent={content} onChange={handleChange} />
-                <button type="submit">저장</button>
-            </form>
-        </Fragment>
-    );
+    // const { data, error, loading } = useMutation(INSERT_POST);
+    // const [title, setTitle] = useState("");
+    // const [content, setContent] = useState("");
+    // const [html, setHtml] = useState("");
+    // const [text, setText] = useState("");
+
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // if (error) {
+    //     return <div>Error! {error.message}</div>;
+    // }
+
+    // // 상태 변화를 감지하면 적용시켜줍니다.
+    // const handleChange = (name, value) => {
+    //     if (name === "title") {
+    //         setTitle(value);
+    //     } else if (name === "content") {
+    //         setContent(value);
+    //     } else if (name === "html") {
+    //         setHtml(value);
+    //     } else if (name === "text") {
+    //         setText(value);
+    //     } else {
+    //         alert("알수없는 타입이 들어왔습니다.");
+    //     }
+    // };
+
+    // return (
+    //     <Fragment>
+    //         <form
+    //             onSubmit={e => {
+    //                 e.preventDefault();
+    //                 console.log(title);
+    //                 console.log(content);
+    //                 setTitle("");
+    //                 setContent("");
+    //                 setHtml("");
+    //                 setText("");
+    //             }}
+    //         >
+    //             <Title userTitle={title} onChange={handleChange} />
+    //             <Contents userCotent={content} onChange={handleChange} />
+    //             <button type="submit">저장</button>
+    //         </form>
+    //     </Fragment>
+    // );
 };
 
 {

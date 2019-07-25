@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 
-const IS_LOGIN = gql`
-    query {
-        isLogin {
+const GET_LOGIN_MEMBER = gql`
+    {
+        getLoginMember {
             _id
         }
     }
 `;
 
 const Check = () => {
-    const { data, error, loading } = useQuery(IS_LOGIN);
+    const { data, error, loading } = useQuery(GET_LOGIN_MEMBER);
 
-    console.log(data);
+    console.log("test : ", data);
 
     if (loading) {
         return <div>Loading...</div>;
