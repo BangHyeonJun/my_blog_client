@@ -10,9 +10,9 @@ import PostBody from "./PostBody";
 import PostHashtag from "./PostHashtag";
 import PostMainImg from "./PostMainImg";
 
-const SINGLEUPLOAD = gql`
+const UPLOAD_MAIN_IMG = gql`
     mutation($file: Upload!) {
-        singleUpload(file: $file) {
+        UploadMainImg(file: $file) {
             filename
         }
     }
@@ -40,13 +40,13 @@ const WritePost = ({ userID }) => {
     // 리액트 HOOKS
     const writer = userID;
     const [title, setTitle] = useState("");
-    const [mainImg, setMainImg] = useState("");
+    const [mainImg, setMainImg] = useState({ name: "", type: "" });
     const [text, setText] = useState("");
     const [html, setHtml] = useState("");
     const [hashtag, setHashtag] = useState("");
 
     // 서버 쿼리
-    const singleUploadMutation = useMutation(SINGLEUPLOAD);
+    const uploadMainImgMutation = useMutation(UPLOAD_MAIN_IMG);
     const insertPostMutation = useMutation(INSERT_POST);
 
     // 제목 변경 시 타이틀 적용
@@ -56,6 +56,7 @@ const WritePost = ({ userID }) => {
 
     // 이미지 변경 시 메인이미지 적용
     const handleMainImg = val => {
+        console.log(val);
         setMainImg(val);
     };
 
@@ -84,7 +85,6 @@ const WritePost = ({ userID }) => {
         console.log("hashtag", hashtag);
 
         // TODO : 메인 이미지 작업 진행해야함
-
         await insertPostMutation({
             variables: {
                 userID: writer,
@@ -92,6 +92,12 @@ const WritePost = ({ userID }) => {
                 title: title,
                 text: text,
                 html: html
+            }
+        });
+
+        await uploadMainImgMutation({
+            variables: {
+                file: mainImg
             }
         });
     };
