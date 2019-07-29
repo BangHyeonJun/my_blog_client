@@ -9,7 +9,7 @@ import "react-quill/dist/quill.snow.css";
 // Quill 참고
 //https://www.npmjs.com/package/react-quill#theme
 
-const Content = ({ userCotent, userHtml, userMainImg, onChange }) => {
+const Content = ({ userText, userHtml, onChange }) => {
     let placeholder = "내용을 입력해주세요";
     let reactQuillRef = null;
     let quillRef = null;
@@ -19,10 +19,10 @@ const Content = ({ userCotent, userHtml, userMainImg, onChange }) => {
     });
 
     useEffect(() => {
-        if (userCotent.text === "") {
+        if (userText.text === "") {
             quillRef.setText("");
         }
-    }, [quillRef, userCotent]);
+    }, [quillRef, userText]);
 
     const attachQuillRefs = () => {
         // Ensure React-Quill reference is available:
@@ -43,9 +43,8 @@ const Content = ({ userCotent, userHtml, userMainImg, onChange }) => {
         // console.log("text", text);
         // console.log("html", html);
 
-        // onChange("content", content);
-        onChange("content", text);
         onChange("html", html);
+        onChange("text", text);
     };
 
     return (
@@ -58,7 +57,7 @@ const Content = ({ userCotent, userHtml, userMainImg, onChange }) => {
                 onChange={handleChange}
                 modules={Editor.modules}
                 formats={Editor.formats}
-                defaultValue={userCotent}
+                defaultValue={userText}
                 placeholder={placeholder}
             />
         </Fragment>

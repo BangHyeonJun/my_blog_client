@@ -3,9 +3,8 @@ import React, { Component } from "react";
 const Title = ({ userTitle, onChange }) => {
     const handleChange = e => {
         e.preventDefault();
-        const name = e.target.name;
         const value = e.target.value;
-        onChange(name, value);
+        onChange(value);
     };
 
     return (

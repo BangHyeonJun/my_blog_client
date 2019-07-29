@@ -2,57 +2,106 @@ import React, { useState } from "react";
 
 // Apollo
 import gql from "graphql-tag";
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
 
 /* 사용자 컴포넌트 */
 import PostTitle from "./PostTitle";
 import PostBody from "./PostBody";
 import PostHashtag from "./PostHashtag";
+import PostMainImg from "./PostMainImg";
+
+const SINGLEUPLOAD = gql`
+    mutation($file: Upload!) {
+        singleUpload(file: $file) {
+            filename
+        }
+    }
+`;
+
+const INSERT_POST = gql`
+    mutation(
+        $userID: String!
+        $hashtag: String!
+        $title: String!
+        $text: String!
+        $html: String!
+    ) {
+        insertPost(
+            userID: $userID
+            hashtag: $hashtag
+            title: $title
+            text: $text
+            html: $html
+        )
+    }
+`;
 
 const WritePost = ({ userID }) => {
+    // 리액트 HOOKS
     const writer = userID;
-    const [mainImg, handleMainImg] = useState("");
-    const [hashtag, handleHashtag] = useState([]);
-    const [title, handleTitle] = useState("");
-    const [content, handleContent] = useState("");
-    const [html, handleHtml] = useState("");
+    const [title, setTitle] = useState("");
+    const [mainImg, setMainImg] = useState("");
+    const [text, setText] = useState("");
+    const [html, setHtml] = useState("");
+    const [hashtag, setHashtag] = useState("");
 
-    const handelChange = (name, val) => {
+    // 서버 쿼리
+    const singleUploadMutation = useMutation(SINGLEUPLOAD);
+    const insertPostMutation = useMutation(INSERT_POST);
+
+    // 제목 변경 시 타이틀 적용
+    const handelTitle = val => {
+        setTitle(val);
+    };
+
+    // 이미지 변경 시 메인이미지 적용
+    const handleMainImg = val => {
+        setMainImg(val);
+    };
+
+    // 해시태그 변경 시 해시태그 적용
+    const handleHashtag = val => {
+        setHashtag(val);
+    };
+
+    // 바디 변경 시 내용 적용
+    const handleBody = (name, val) => {
         switch (name) {
-            case "title":
-                handleTitle(val);
-                break;
             case "html":
-                handleHtml(val);
+                setHtml(val);
                 break;
-            case "content":
-                handleContent(val);
-                break;
-            case "mainImg":
-                handleMainImg(val);
-                break;
-            case "hashtag":
-                handleHashtag(val);
+            case "text":
+                setText(val);
                 break;
         }
     };
 
-    const test = () => {
-        console.log("tset");
-        console.log(content);
-        console.log(html);
+    const test = async () => {
+        console.log("title", title);
+        console.log("mainImg", mainImg);
+        console.log("text", text);
+        console.log("html", html);
+        console.log("hashtag", hashtag);
+
+        // TODO : 메인 이미지 작업 진행해야함
+
+        await insertPostMutation({
+            variables: {
+                userID: writer,
+                hashtag: hashtag,
+                title: title,
+                text: text,
+                html: html
+            }
+        });
     };
 
     return (
         <div>
-            <PostTitle userTitle={""} onChange={handelChange} />
-            <PostBody
-                userCotent={content}
-                userHtml={html}
-                userMainImg={mainImg}
-                onChange={handelChange}
-            />
-            <PostHashtag userHashtag={""} onChange={handelChange} />
+            <PostTitle userTitle={title} onChange={handelTitle} />
+            <PostMainImg userMainImg={mainImg} onChange={handleMainImg} />
+            <PostBody userText={text} userHtml={html} onChange={handleBody} />
+            <PostHashtag userHashtag={hashtag} onChange={handleHashtag} />
             <button onClick={test}>완료</button>
         </div>
     );
