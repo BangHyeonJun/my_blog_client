@@ -40,7 +40,7 @@ const WritePost = ({ userID }) => {
     // 리액트 HOOKS
     const writer = userID;
     const [title, setTitle] = useState("");
-    const [mainImg, setMainImg] = useState({ name: "", type: "" });
+    const [mainImg, setMainImg] = useState({});
     const [text, setText] = useState("");
     const [html, setHtml] = useState("");
     const [hashtag, setHashtag] = useState("");
@@ -85,15 +85,15 @@ const WritePost = ({ userID }) => {
         console.log("hashtag", hashtag);
 
         // TODO : 메인 이미지 작업 진행해야함
-        await insertPostMutation({
-            variables: {
-                userID: writer,
-                hashtag: hashtag,
-                title: title,
-                text: text,
-                html: html
-            }
-        });
+        // await insertPostMutation({
+        //     variables: {
+        //         userID: writer,
+        //         hashtag: hashtag,
+        //         title: title,
+        //         text: text,
+        //         html: html
+        //     }
+        // });
 
         await uploadMainImgMutation({
             variables: {

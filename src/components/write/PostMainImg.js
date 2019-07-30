@@ -10,11 +10,7 @@ const PostMainImg = ({ userMainImg, onChange }) => {
 
     return (
         <div>
-            <input
-                type="file"
-                value={userMainImg ? userMainImg.name : ""}
-                onChange={handleChange}
-            />
+            <input type="file" onChange={handleChange} />
         </div>
     );
 };
