@@ -1,12 +1,16 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
-import classNames from "classnames/bind";
-import styles from "./index.module.scss";
-import Search from "../search";
 
 // 사용자 컴포넌트
 import Card from "./Card";
+import Header from "../header";
+// import Search from "../header/search";
+
+// 사용자 스타일 컴포넌트
+import classNames from "classnames/bind";
+import styles from "./index.module.scss";
+
 const cx = classNames.bind(styles);
 
 const GET_POSTS = gql`
@@ -14,13 +18,10 @@ const GET_POSTS = gql`
         getPosts {
             _id
             title
-            category
-            mainImg
+            text
             publish_date
-            content
-            comments {
-                publish_date
-            }
+            mainImg
+            writer
         }
     }
 `;
@@ -38,12 +39,10 @@ const PostList = () => {
 
     return (
         <div className={cx("container")}>
-            <div className={cx("search-container")}>
-                <Search />
-            </div>
+            <div className={cx("search-container")}>{/* <Search /> */}</div>
             <div className={cx("postlist-container")}>
                 <div className={cx("postlist-box")}>
-                    {data.post.map(post => (
+                    {/* {data.post.map(post => (
                         <Card
                             key={post._id}
                             id={post._id}
@@ -53,7 +52,7 @@ const PostList = () => {
                             publish_date={post.publish_date}
                             commentCount={post.comments.lenght}
                         />
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import TestHeader from "./test_header";
+import Header from "./header";
 
 /* 포스트 관련 */
 import Post from "./post";
@@ -29,8 +29,7 @@ export default class index extends Component {
     render() {
         return (
             <div className={cx("container")}>
-                {/* <TestHeader /> */}
-                {/* 이 부분은 테스트를 위한 부분 입니다.*/}
+                <Header />
                 <div className={cx("router-box")}>
                     <Switch>
                         {/* 포스트 관련 */}

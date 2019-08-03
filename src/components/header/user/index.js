@@ -1,17 +1,15 @@
 import React from "react";
+import no_profile from "../../../static/images/no-profile.jpg";
 
-// SCSS 호출
+// 사용자 스타일 컴포넌트
 import classNames from "classnames/bind";
 import styles from "./index.module.scss";
-
-// 사용자 컨테이너
-import Search from "./search";
 const cx = classNames.bind(styles);
 
 const index = () => {
     return (
-        <div className={cx("container")}>
-            <Search />
+        <div>
+            <img src={no_profile} className={cx("profile")} />
         </div>
     );
 };

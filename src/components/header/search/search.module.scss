@@ -1,4 +1,4 @@
-@import "../common/sass/mobile.scss";
+@import "../../common/sass/mobile.scss";
 
 .searchContainer {
     width: 45%;
@@ -49,7 +49,7 @@
         border-radius: 0 3px 3px 0;
         border: 1px solid rgba($color: #dfdfdf, $alpha: 0.5);
         background-color: #3498db;
-        background-image: url("../../static/images/search.svg");
+        background-image: url("../../../static/images/search.svg");
         background-size: 30px 30px;
         background-repeat: no-repeat;
         background-position: center center;

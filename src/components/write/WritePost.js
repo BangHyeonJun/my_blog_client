@@ -11,8 +11,8 @@ import PostHashtag from "./PostHashtag";
 import PostMainImg from "./PostMainImg";
 
 const UPLOAD_MAIN_IMG = gql`
-    mutation($file: Upload!) {
-        UploadMainImg(file: $file) {
+    mutation($postID: String!, $file: Upload!) {
+        UploadMainImg(postID: $postID, file: $file) {
             filename
         }
     }
@@ -32,7 +32,9 @@ const INSERT_POST = gql`
             title: $title
             text: $text
             html: $html
-        )
+        ) {
+            _id
+        }
     }
 `;
 
@@ -85,18 +87,21 @@ const WritePost = ({ userID }) => {
         console.log("hashtag", hashtag);
 
         // TODO : 메인 이미지 작업 진행해야함
-        // await insertPostMutation({
-        //     variables: {
-        //         userID: writer,
-        //         hashtag: hashtag,
-        //         title: title,
-        //         text: text,
-        //         html: html
-        //     }
-        // });
+        const postResult = await insertPostMutation({
+            variables: {
+                userID: writer,
+                hashtag: hashtag,
+                title: title,
+                text: text,
+                html: html
+            }
+        });
+
+        console.log(postResult);
 
         await uploadMainImgMutation({
             variables: {
+                postID: postResult.data.insertPost._id,
                 file: mainImg
             }
         });

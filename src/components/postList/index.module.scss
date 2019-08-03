@@ -14,20 +14,20 @@
     justify-content: center;
     align-items: center;
 
-    .postlist-box {
-        width: 85%;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    // .postlist-box {
+    //     width: 85%;
+    //     display: flex;
+    //     justify-content: space-between;
+    //     flex-wrap: wrap;
 
-        @media screen and (max-width: $tablet-max-width) {
-            width: 90%;
-            justify-content: space-between;
-        }
+    //     @media screen and (max-width: $tablet-max-width) {
+    //         width: 90%;
+    //         justify-content: space-between;
+    //     }
 
-        @media screen and (max-width: $mobile-max-width) {
-            width: 100%;
-            justify-content: center;
-        }
-    }
+    //     @media screen and (max-width: $mobile-max-width) {
+    //         width: 100%;
+    //         justify-content: center;
+    //     }
+    // }
 }
