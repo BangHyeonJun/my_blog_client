@@ -1,6 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
+import Masonry from "react-masonry-component";
 
 // 사용자 컴포넌트
 import Card from "./Card";
@@ -27,7 +28,11 @@ const GET_POSTS = gql`
 `;
 
 const PostList = () => {
-    const { data, error, loading } = useQuery(GET_POSTS);
+    const {
+        data: { getPosts: pList },
+        error,
+        loading
+    } = useQuery(GET_POSTS);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -37,25 +42,50 @@ const PostList = () => {
         return <div>Error! {error.message}</div>;
     }
 
+    for (let i = 0; i < 10; i++) {
+        pList.push(pList[0]);
+    }
+
     return (
-        <div className={cx("container")}>
-            <div className={cx("search-container")}>{/* <Search /> */}</div>
-            <div className={cx("postlist-container")}>
-                <div className={cx("postlist-box")}>
-                    {/* {data.post.map(post => (
-                        <Card
-                            key={post._id}
-                            id={post._id}
-                            img={post.mainImg}
-                            title={post.title}
-                            category={post.category}
-                            publish_date={post.publish_date}
-                            commentCount={post.comments.lenght}
-                        />
-                    ))} */}
+        <Masonry className={cx("container")}>
+            {pList.map(post => (
+                <div
+                    style={{
+                        width: "360px",
+                        height: 360 + Math.floor(Math.random() * 3) * 30 + "px"
+                    }}
+                >
+                    test
                 </div>
-            </div>
-        </div>
+                // <Card
+                //     key={post._id}
+                //     id={post._id}
+                //     img={post.mainImg}
+                //     title={post.title}
+                //     writer={post.writer}
+                //     publish_date={post.publish_date}
+                // />
+            ))}
+        </Masonry>
+
+        // <div className={cx("container")}>
+        //     <div className={cx("search-container")}>{/* <Search /> */}</div>
+        //     <div className={cx("postlist-container")}>
+        //         <div className={cx("postlist-box")}>
+        //             {/* {data.post.map(post => (
+        //                 <Card
+        //                     key={post._id}
+        //                     id={post._id}
+        //                     img={post.mainImg}
+        //                     title={post.title}
+        //                     category={post.category}
+        //                     publish_date={post.publish_date}
+        //                     commentCount={post.comments.lenght}
+        //                 />
+        //             ))} */}
+        //         </div>
+        //     </div>
+        // </div>
     );
 };
 

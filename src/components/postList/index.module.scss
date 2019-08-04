@@ -1,7 +1,22 @@
 @import "../common/sass/mobile.scss";
 
 .container {
-    width: 100%;
+    width: calc(100% - 72px);
+    height: calc(100vh - 76px);
+    padding: 24px 36px;
+    background-color: #f1f3f5;
+    overflow-y: auto;
+
+    display: flex;
+    flex-flow: row wrap;
+
+    &::before,
+    &::after {
+        content: "";
+        flex-basis: 100%;
+        width: 0;
+        order: 5;
+    }
 }
 
 .search-container {

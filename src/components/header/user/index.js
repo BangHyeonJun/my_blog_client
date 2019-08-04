@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 const index = () => {
     return (
-        <div>
+        <div className={cx("profile-box")}>
             <img src={no_profile} className={cx("profile")} />
         </div>
     );
